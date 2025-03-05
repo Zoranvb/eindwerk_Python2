@@ -1,0 +1,14 @@
+/* Zorgt dat de hele pagina een flex-container is */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Minimaal schermhoogte */
+    margin: 0;
+    background-color: black;
+}
+
+/* De main-content krijgt alle ruimte */
+main {
+    flex: 1; /* Laat main-content de overgebleven ruimte vullen */
+    padding: 20px;
+}

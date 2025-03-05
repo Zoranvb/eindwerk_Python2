@@ -1,0 +1,26 @@
+.header-container {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: black;
+    color: aliceblue;
+}
+
+.header {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    background-color: #333;
+}
+
+.header-logo {
+    max-width: 300px; /* Beperk de breedte van het logo */
+    width: 100%;      /* Zorgt ervoor dat het logo zich aanpast binnen de container */
+    height: auto;     /* Houd de verhoudingen intact */
+    margin: 0 auto;   /* Centreer het logo */
+    display: block;   /* Verwijder flex van de afbeelding */
+}

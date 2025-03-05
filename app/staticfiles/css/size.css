@@ -1,0 +1,26 @@
+#size-container {
+    padding-top: 10px;
+}
+
+#size-fields {
+    display: flex;
+    flex-direction: column;
+}
+
+#size-fields .mb-2 {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Ruimte tussen de knoppen en invoervelden */
+}
+
+#size-fields label {
+    margin-left: 10px; /* Geef wat ruimte tussen de invoervelden en de maatlabel */
+}
+
+.size-input {
+    text-align: center; /* Zorg ervoor dat de tekst in het inputveld netjes in het midden staat */
+}
+
+.increment, .decrement {
+    cursor: pointer;
+}

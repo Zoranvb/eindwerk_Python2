@@ -1,0 +1,14 @@
+{% load static %}
+<!-- rts_app/templates/rts_app/header.html -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">  <!-- CSS voor de navbar -->
+
+<body class="navbar-container">
+    <nav>
+        <ul>
+            <li><a class="nav-item" href="{% url 'home' %}">Home</a></li> <!-- Verander 'button' naar 'nav-item' -->
+            <li><a class="nav-item" href="{% url 'create_article' %}">Input Article</a></li> <!-- Verander 'button' naar 'nav-item' -->
+            <li><a class="nav-item" href="#">Contact</a></li> <!-- Verander 'button' naar 'nav-item' -->
+            <li><a class="nav-item" href="{% url 'logout' %}">Log Out</a></li> <!-- Verander 'button' naar 'nav-item' -->
+        </ul>
+    </nav>
+</body>

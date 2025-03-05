@@ -1,0 +1,151 @@
+/* Algemene instellingen */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Body instellingen */
+body {
+    background-color: #111;  /* Zwarte achtergrond */
+    color: white;  /* Witte tekstkleur */
+    padding: 20px;
+}
+
+/* Hoofd container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1a1a1a;  /* Iets lichter zwart voor de content */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Koptekst */
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+/* Formulierinstellingen */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input velden */
+input, select, button {
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #222;  /* Donkerder voor velden */
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Focus effect voor inputvelden */
+input:focus, select:focus, button:focus {
+    border-color: #ffcc00;
+    outline: none;
+}
+
+/* Knoppen */
+button {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #444;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect voor knoppen */
+button:hover {
+    background-color: #444;
+    transform: translateY(-2px);
+}
+
+/* Formulier labels */
+.form-label {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Stijl voor de dropdown select */
+select {
+    background-color: #222;
+    color: white;
+}
+
+/* Stijlen voor de grootte en hoeveelheid sectie */
+#size-container {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+#size-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#size-fields .d-flex {
+    align-items: center;
+}
+
+/* Stijlen voor de + en - knoppen */
+button.increment {
+    background-color: #28a745;  /* Groene kleur voor + */
+    color: white;
+}
+
+button.increment:hover {
+    background-color: #218838;  /* Donkergroene hover */
+}
+
+button.decrement {
+    background-color: #dc3545;  /* Rood voor - */
+    color: white;
+}
+
+button.decrement:hover {
+    background-color: #c82333;  /* Donkerrode hover */
+}
+
+/* Stijlen voor de footer */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #222;
+    color: white;
+    text-align: center;
+}
+
+/* Stijlen voor responsive ontwerp */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #size-fields {
+        flex-direction: column;
+    }
+}

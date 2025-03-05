@@ -1,0 +1,25 @@
+h2 {
+    text-align: center;
+}   
+
+.login-logo {
+    max-width: 300px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Zorgt ervoor dat het logo gecentreerd blijft */
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column; /* Stapel elementen onder elkaar */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}   

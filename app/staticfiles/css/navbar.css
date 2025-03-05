@@ -1,0 +1,58 @@
+/* General navbar settings */
+nav {
+    background-color: #111; /* Donkergrijze achtergrond */
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center; /* Centreren van de nav-items */
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4); /* Schaduw voor een modern effect */
+}
+
+/* De ul (lijst) in de navbar */
+nav ul {
+    display: flex;
+    list-style-type: none;  /* Verwijder standaard lijststijl (punten) */
+    padding: 0;
+    margin: 0;
+    gap: 15px; /* Voeg wat ruimte tussen de knoppen */
+}
+
+/* Nav-item stijl */
+.nav-item {
+    background-color: #222; /* Zwarte achtergrond voor de knoppen */
+    color: white;
+    font-size: 1rem;
+    text-transform: uppercase; /* Maakt de tekst hoofdletters */
+    padding: 12px 20px;
+    border-radius: 5px; /* Ronde hoeken */
+    transition: all 0.3s ease; /* Vloeiende overgang voor hover-effecten */
+    cursor: pointer;
+}
+
+/* Hover effect met shine */
+.nav-item:hover {
+    background-color: #333; /* Lichtere zwarte tint bij hover */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /* "Shine" effect (wit licht) */
+    transform: translateY(-2px); /* Lichte verhoging bij hover */
+}
+
+/* Actieve knop */
+.nav-item.active {
+    background-color: #444; /* Nog donkerder bij actieve knop */
+    color: #ffcc00; /* Gouden tekstkleur voor actieve knop */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* Zachte gloed rond de actieve knop */
+}
+
+/* Maak de knoppen groter voor mobiel (responsive) */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
+    }
+}

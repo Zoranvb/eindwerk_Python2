@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Input Article</title>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/create_article.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        {% include 'rts_app/header.html' %}
+    </header>
+
+    <main class="container mt-4">
+        <h2>Input Article</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Product Type -->
+            <div class="dropdown">
+                <label for="id_producttype" class="form-label">Product Type</label>
+                <select id="id_producttype" name="producttype" class="form-control">
+                    <option value="">Select a product type</option>
+                    {% for product in form.fields.producttype.queryset %}
+                        <option value="{{ product.id }}" data-clothing="{{ product.clothing|yesno:'true,false' }}">{{ product.typename }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Design -->
+            <div class="dropdown">
+                <label for="id_design" class="form-label">Design</label>
+                {{ form.design }}
+            </div>
+
+            <!-- Company -->
+            <div class="dropdown">
+                <label for="id_companyname" class="form-label">Company</label>
+                {{ form.companyname }}
+            </div>
+
+            <!-- Size Field (verborgen tenzij kleding) -->
+            <div id="size-container" class="mb-3" style="display: none;">
+                <label class="form-label">Sizes & Quantity</label>
+                <div id="size-fields">
+                    {% for size in form.sizes %}
+                        <div class="d-flex align-items-center mb-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm decrement" data-size="{{ size.sizenr }}">-</button>
+                            <input type="number" name="size_{{ size.sizenr }}" value="0" min="0" class="form-control mx-2 size-input" style="width: 60px;">
+                            <button type="button" class="btn btn-outline-secondary btn-sm increment" data-size="{{ size.sizenr }}">+</button>
+                            <label class="ms-2">{{ size.size }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Limited Edition -->
+            <div class="form-check mb-3">
+                {{ form.limited_edition }}
+                <label class="form-check-label" for="id_limited_edition">Limited Edition</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </main>
+
+    <footer>
+        {% include 'rts_app/footer.html' %}
+    </footer>
+
+    <!-- jQuery Script -->
+    <script>
+        $(document).ready(function () {
+            function toggleSizeField() {
+                var selectedOption = $("#id_producttype option:selected");
+                var isClothing = selectedOption.data("clothing") === true;
+
+                if (isClothing) {
+                    $("#size-container").slideDown();
+                } else {
+                    $("#size-container").slideUp();
+                    $(".size-input").val(0); // Reset sizes
+                }
+            }
+
+            // Initieel controleren bij laden
+            toggleSizeField();
+
+            // Bij wijziging van producttype
+            $("#id_producttype").change(function () {
+                toggleSizeField();
+            });
+
+            // + en - knoppen functionaliteit
+            $(document).on("click", ".increment", function () {
+                var input = $(this).siblings(".size-input");
+                input.val(parseInt(input.val()) + 1);
+            });
+
+            $(document).on("click", ".decrement", function () {
+                var input = $(this).siblings(".size-input");
+                if (parseInt(input.val()) > 0) {
+                    input.val(parseInt(input.val()) - 1);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% load static %}
+<!-- rts_app/templates/rts_app/header.html -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">  <!-- CSS voor de header -->
+
+<header>
+    <div class="header-container">
+        <img src="{% static 'images/Logos/05_COMPACT_COLOR_2023.png' %}" alt="Logo" class="header-logo">  <!-- Afbeelding voor de header -->
+        <h1>RTS App</h1>
+        {% include 'rts_app/navbar.html' %}
+    </div>
+</header>
