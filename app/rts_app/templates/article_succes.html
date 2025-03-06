@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Article Success</title>
+    <link rel="stylesheet" href="{% static 'css/create_article.css' %}">
+</head>
+<body>
+    <header>
+        {% include 'rts_app/header.html' %}
+    </header>
+
+    <main class="container mt-4">
+        <h2>Artikel Gecreëerd</h2>
+        <p>Het artikel is succesvol aangemaakt! Hier zijn de details:</p>
+
+        <div class="article-details">
+            <p><strong>Artikelnummer:</strong> {{ article.articlenr }}</p>
+            <p><strong>Product Type:</strong> {{ article.producttype.typename }}</p>
+            <p><strong>Design:</strong> {{ article.design.designname }}</p>
+            <p><strong>Company:</strong> {{ article.company.companyname }}</p>
+            <p><strong>Limited Edition:</strong> {{ article.limited_edition.le if article.limited_edition else "Geen" }}</p>
+            <p><strong>Beschrijving:</strong> {{ article.description }}</p>
+        </div>
+
+        <a href="{% url 'create_article' %}" class="btn btn-primary mt-3">Nieuw Artikel Toevoegen</a>
+    </main>
+
+    <footer>
+        {% include 'rts_app/footer.html' %}
+    </footer>
+</body>
+</html>

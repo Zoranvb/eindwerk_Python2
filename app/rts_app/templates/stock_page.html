@@ -1,0 +1,85 @@
+<!-- stock_page.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Overview</title>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stock_page.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        {% include 'rts_app/header.html' %}
+    </header>
+
+    <main class="container mt-4">
+        <h2>Stock Overview</h2>
+
+        <!-- Filters -->
+        <form method="GET" class="mb-4">
+            <div class="form-row">
+                <div class="col">
+                    <label for="producttype">Product Type</label>
+                    <select name="producttype" id="producttype" class="form-control">
+                        <option value="">-- Select Product Type --</option>
+                        {% for producttype in producttypes %}
+                            <option value="{{ producttype.producttype }}" {% if request.GET.producttype == producttype.producttype %} selected {% endif %}>
+                                {{ producttype.producttype }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="design">Design</label>
+                    <select name="design" id="design" class="form-control">
+                        <option value="">-- Select Design --</option>
+                        {% for design in designs %}
+                            <option value="{{ design.design }}" {% if request.GET.design == design.design %} selected {% endif %}>
+                                {{ design.design }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="companyname">Company</label>
+                    <input type="text" name="companyname" id="companyname" class="form-control" value="{{ request.GET.companyname }}" placeholder="Search by Company" />
+                </div>
+                <div class="col d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Tabel weergave van de voorraad -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Article Number</th>
+                    <th>Product Type</th>
+                    <th>Design</th>
+                    <th>Company</th>
+                    <th>Total Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in stock %}
+                    <tr>
+                        <td>{{ item.article.articlenr }}</td>
+                        <td>{{ item.article.producttype.typename }}</td>
+                        <td>{{ item.article.design.designname }}</td>
+                        <td>{{ item.article.companyname }}</td>
+                        <td>{{ item.total_quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        {% include 'rts_app/footer.html' %}
+    </footer>
+</body>
+</html>

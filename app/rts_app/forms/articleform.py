@@ -1,16 +1,29 @@
+import logging
 from django import forms
-from rts_app.models.article_models import Article, ProductType, Design, Size, Company, ArticleSizeQuantity  
+from rts_app.models.article_models import Article, ProductType, Design, Size, Company
+
+logger = logging.getLogger(__name__)
 
 class ArticleForm(forms.ModelForm):
     """
-    Formulier voor het aanmaken van een nieuw artikel.
-    Dit formulier bevat velden voor het selecteren van producttype, design, company,
-    het kiezen of het artikel een limited edition is, en het invoeren van maten als het om kleding gaat.
+    Form for creating a new article.
+    This form includes fields for selecting product type, design, company,
+    choosing whether the article is a limited edition, and entering sizes if it is clothing.
     """
-    
-    limited_edition = forms.BooleanField(required=False, label="Limited Edition")
 
-    # Dropdowns voor andere modellen
+    # Dropdown for Limited Edition: '01' = Limited Edition, '02' = Regular Edition
+    LIMITED_EDITION_CHOICES = [
+        ('01', 'Limited Edition'),
+        ('02', 'Regular Edition'),
+    ]
+    limited_edition = forms.ChoiceField(
+        choices=LIMITED_EDITION_CHOICES,
+        required=False,
+        label="Limited Edition",
+        widget=forms.Select(attrs={"class": "form-control"})
+    )
+
+    # Dropdowns for other models
     design = forms.ModelChoiceField(
         queryset=Design.objects.all(), 
         empty_label="Select a design", 
@@ -26,24 +39,41 @@ class ArticleForm(forms.ModelForm):
     producttype = forms.ModelChoiceField(
         queryset=ProductType.objects.all(),
         empty_label="Select a product type",
-        widget=forms.Select(attrs={"class": "form-control", "id": "id_producttype"})  # ID toegevoegd voor JS
+        widget=forms.Select(attrs={"class": "form-control", "id": "id_producttype"})
     )
 
     class Meta:
         model = Article
-        fields = ["producttype", "design", "companyname", "limited_edition", "description"]
+        fields = ["producttype", "design", "companyname", "limited_edition"]
+        error_messages = {
+            'producttype': {
+                'required': 'This field is required.',
+            },
+            'design': {
+                'required': 'This field is required.',
+            },
+            'companyname': {
+                'required': 'This field is required.',
+            },
+            'limited_edition': {
+                'invalid_choice': 'Select a valid choice. Limited Edition is not one of the available choices.',
+            },
+        }
 
     def __init__(self, *args, **kwargs):
         """
-        Extra setup bij het initialiseren van het formulier:
-        - Ophalen van maten om dynamische velden te genereren als het om kleding gaat.
+        Extra setup when initializing the form:
+        - Fetch sizes to dynamically generate fields if it is clothing.
         """
         super().__init__(*args, **kwargs)
 
-        # Haal alle maten op, maar sluit sizenr=99 uit
+        # Log the initial data to debug
+        logger.debug("Initial data: %s", self.initial)
+
+        # Fetch all sizes, but exclude sizenr=99
         self.sizes = Size.objects.exclude(sizenr=99)
 
-        # Dynamisch velden toevoegen voor maten
+        # Dynamically add fields for sizes
         for size in self.sizes:
             field_name = f"size_{size.sizenr}"
             self.fields[field_name] = forms.IntegerField(
@@ -56,7 +86,7 @@ class ArticleForm(forms.ModelForm):
 
     def clean(self):
         """
-        Validatie om te controleren of de maat (size) enkel ingevuld wordt als het producttype kleding is.
+        Validation to check if the size is only filled in if the product type is clothing.
         """
         cleaned_data = super().clean()
         producttype = cleaned_data.get("producttype")

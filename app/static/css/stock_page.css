@@ -1,0 +1,37 @@
+/* stock_page.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f8f8f8;
+}
+
+.form-row {
+    margin-bottom: 20px;
+}
+
+.form-row .col {
+    margin-right: 15px;
+}
+
+.form-control {
+    width: 100%;
+}

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +19,7 @@
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            {{ form.non_field_errors }}
 
             <!-- Product Type -->
             <div class="dropdown">
@@ -29,21 +30,31 @@
                         <option value="{{ product.id }}" data-clothing="{{ product.clothing|yesno:'true,false' }}">{{ product.typename }}</option>
                     {% endfor %}
                 </select>
+                <span id="selected-producttype"></span>
             </div>
 
             <!-- Design -->
             <div class="dropdown">
                 <label for="id_design" class="form-label">Design</label>
                 {{ form.design }}
+                <span id="selected-design"></span>
             </div>
 
             <!-- Company -->
             <div class="dropdown">
                 <label for="id_companyname" class="form-label">Company</label>
                 {{ form.companyname }}
+                <span id="selected-companyname"></span>
             </div>
 
-            <!-- Size Field (verborgen tenzij kleding) -->
+            <!-- Limited Edition Dropdown -->
+            <div class="dropdown">
+                <label for="id_limited_edition" class="form-label">Limited Edition</label>
+                {{ form.limited_edition }}
+                <span id="selected-limited-edition"></span>
+            </div>
+
+            <!-- Size Field (Hidden unless clothing) -->
             <div id="size-container" class="mb-3" style="display: none;">
                 <label class="form-label">Sizes & Quantity</label>
                 <div id="size-fields">
@@ -58,10 +69,10 @@
                 </div>
             </div>
 
-            <!-- Limited Edition -->
-            <div class="form-check mb-3">
-                {{ form.limited_edition }}
-                <label class="form-check-label" for="id_limited_edition">Limited Edition</label>
+            <!-- Non-clothing Quantity Field (Always visible, non-clothing) -->
+            <div id="quantity-container" class="form-group mb-3">
+                <label for="quantity" class="form-label">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" />
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -75,27 +86,50 @@
     <!-- jQuery Script -->
     <script>
         $(document).ready(function () {
+            // Function to toggle size-container visibility based on product type
             function toggleSizeField() {
                 var selectedOption = $("#id_producttype option:selected");
                 var isClothing = selectedOption.data("clothing") === true;
 
                 if (isClothing) {
-                    $("#size-container").slideDown();
+                    $("#size-container").slideDown();   // Show size-container for clothing
+                    $("#quantity-container").slideUp(); // Hide quantity for clothing
                 } else {
-                    $("#size-container").slideUp();
-                    $(".size-input").val(0); // Reset sizes
+                    $("#size-container").slideUp();     // Hide size-container for non-clothing
+                    $("#quantity-container").slideDown();// Show quantity for non-clothing
                 }
+
+                // Display the selected option next to the dropdown
+                $("#selected-producttype").text(selectedOption.text());
             }
 
-            // Initieel controleren bij laden
-            toggleSizeField();
+            // Function to display selected option next to dropdown
+            function displaySelectedOption(dropdownId, displayId) {
+                var selectedOption = $(dropdownId + " option:selected").text();
+                $(displayId).text(selectedOption);
+            }
 
-            // Bij wijziging van producttype
+            // Initial check on page load
+            toggleSizeField();
+            displaySelectedOption("#id_design", "#selected-design");
+            displaySelectedOption("#id_companyname", "#selected-companyname");
+            displaySelectedOption("#id_limited_edition", "#selected-limited-edition");
+
+            // On change of dropdowns
             $("#id_producttype").change(function () {
                 toggleSizeField();
             });
+            $("#id_design").change(function () {
+                displaySelectedOption("#id_design", "#selected-design");
+            });
+            $("#id_companyname").change(function () {
+                displaySelectedOption("#id_companyname", "#selected-companyname");
+            });
+            $("#id_limited_edition").change(function () {
+                displaySelectedOption("#id_limited_edition", "#selected-limited-edition");
+            });
 
-            // + en - knoppen functionaliteit
+            // Functionality for + and - buttons for size fields
             $(document).on("click", ".increment", function () {
                 var input = $(this).siblings(".size-input");
                 input.val(parseInt(input.val()) + 1);

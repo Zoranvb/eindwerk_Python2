@@ -1,5 +1,14 @@
+body {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
 h2 {
     text-align: center;
+    color: white;
 }   
 
 .login-logo {
@@ -7,19 +16,59 @@ h2 {
     width: auto;
     height: auto;
     display: block;
-    margin: 0 auto; /* Zorgt ervoor dat het logo gecentreerd blijft */
+    margin: 0 auto;
+    background-color: black;
 }
 
 .login-container {
     display: flex;
-    flex-direction: column; /* Stapel elementen onder elkaar */
+    flex-direction: column; 
     justify-content: center;
     align-items: center;
     padding: 20px;
+    background-color: black;
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-}   
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #007bff;
+}
+
+a:hover {
+    color: #0056b3;
+}
