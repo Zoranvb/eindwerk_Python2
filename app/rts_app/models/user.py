@@ -1,4 +1,4 @@
-from django.db import models # Dit is de juiste import
+from django.db import models 
 import uuid
 
 class User(models.Model):

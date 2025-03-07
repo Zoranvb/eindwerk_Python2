@@ -129,13 +129,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, images)
 STATIC_URL = '/static/'
-
-# De map waar verzamelde statische bestanden worden opgeslagen (voor productie)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Dit is de map waar collectstatic de bestanden plaatst
-
-# De mappen waar Django naar zoekt voor statische bestanden tijdens ontwikkeling
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # De map waar je ontwikkelingsbestanden staan
+    os.path.join(BASE_DIR, 'static'),  
 ]
 
 # Media files (images, documents, etc.)

@@ -11,7 +11,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("home")  # Pas "home" aan naar jouw homepage
+                return redirect("home")
             else:
                 return render(request, "authentication/login.html", {"form": form, "error": "Ongeldige gebruikersnaam of wachtwoord."})
     else:
@@ -20,4 +20,4 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect("login")  # Stuur de gebruiker terug naar de loginpagina
+    return redirect("login")

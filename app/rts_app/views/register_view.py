@@ -7,8 +7,8 @@ def user_register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Log de gebruiker direct in na registratie
-            return redirect('home')  # Pas dit aan naar je eigen homepagina
+            login(request, user)
+            return redirect('home')
     else:
         form = UserCreationForm()
     

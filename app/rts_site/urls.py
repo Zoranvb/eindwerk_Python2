@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-# Voeg hier de juiste import toe voor de views
+
 from app.rts_app.views.login_view import user_login, user_logout
 from rts_app.views.article_create_view import article_create_view
 from rts_app.views.register_view import user_register
@@ -26,7 +26,7 @@ from rts_app.views.home_view import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('app.rts_app.urls')),  # Include rts_app URLs
+    path('', include('app.rts_app.urls')),  
     path('home/', home, name='home'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),

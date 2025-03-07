@@ -14,45 +14,37 @@ def article_create_view(request):
         form = ArticleForm(request.POST, request.FILES)
 
         if form.is_valid():
-            # Retrieve selected values
             producttype = form.cleaned_data.get("producttype")
             design = form.cleaned_data.get("design")
             companyname = form.cleaned_data.get("companyname")
             limited_edition = form.cleaned_data.get("limited_edition")
 
-            # Save article without committing (we need an ID first)
             article = form.save(commit=False)
             article.producttype = producttype.typename
             article.design = design.designname
             article.companyname = companyname.companyname
             article.limited_edition = limited_edition
 
-            # Generate article number
             article.articlenr = generate_article_number(producttype, design, None, article.limited_edition)
-            article.save()  # Save now
+            article.save()
 
-            # Save size input
             if producttype.clothing:
                 for size in form.sizes:
                     size_quantity = form.cleaned_data.get(f"size_{size.sizenr}")
                     if size_quantity > 0:
                         ArticleSize.objects.create(article=article, size=size, quantity=size_quantity)
 
-            # Log success
             logger.info("Article successfully saved with article number: %s", article.articlenr)
 
-            # Redirect to success page with article number
             return redirect("article_success", articlenr=article.articlenr)
 
         else:
-            # Log form errors
             logger.error("Form is not valid: %s", form.errors)
             messages.error(request, "Form is not valid. Please check the fields and try again.")
 
     else:
         form = ArticleForm()
 
-    # Retrieve all LimitedEdition objects to show them in the dropdown
     limited_editions = LimitedEdition.objects.all()
 
     return render(request, "create_article.html", {

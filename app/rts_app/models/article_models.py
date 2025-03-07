@@ -1,7 +1,6 @@
 from django.db import models  # Dit is de juiste import
 from rts_app.utils.article_generator import generate_article_number  # Importeer de functie om artikelnummers te genereren
 
-# Eerst de gerelateerde modellen zoals ProductType, Design, etc.
 class Company(models.Model):
     companynr = models.AutoField(primary_key=True)
     companyname = models.TextField(null=True)
@@ -32,7 +31,7 @@ class Design(models.Model):
 
 class LimitedEdition(models.Model):
     lenr = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255, null=True)  # Changed field name to 'name'
+    name = models.CharField(max_length=255, null=True)  
 
     def __str__(self):
         return self.name
@@ -45,7 +44,7 @@ class LimitedEdition(models.Model):
 class ProductType(models.Model):
     typenr = models.AutoField(primary_key=True)
     typename = models.TextField(null=True)
-    clothing = models.BooleanField(default=False)  # Nieuw veld om kleding te identificeren
+    clothing = models.BooleanField(default=False)  
 
     def __str__(self):
         return self.typename
@@ -93,7 +92,6 @@ class Venue(models.Model):
         app_label = "rts_app"
 
 
-# Dan de ArticleSize en ArticleSizeQuantity klassen, die afhankelijk zijn van Article en Size
 class ArticleSize(models.Model):
     article = models.ForeignKey("Article", on_delete=models.CASCADE)
     size = models.ForeignKey("Size", on_delete=models.CASCADE)
@@ -126,7 +124,7 @@ class ArticleSizeQuantity(models.Model):
         app_label = "rts_app"
 
 
-# Als laatste de Article klasse
+
 class Article(models.Model):
     articlenr = models.BigIntegerField(unique=True, blank=True, null=True)
     producttype = models.ForeignKey("ProductType", on_delete=models.CASCADE, null=True)

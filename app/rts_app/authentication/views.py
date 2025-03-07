@@ -9,7 +9,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("home")  # Stuur door naar de homepage of dashboard
+            return redirect("home")  
         else:
             return render(request, "authentication/login.html", {"error": "Invalid credentials"})
     return render(request, "authentication/login.html")
@@ -23,7 +23,7 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("login")  # Na registratie naar login
+            return redirect("login")  
     else:
         form = RegisterForm()
     return render(request, "authentication/register.html", {"form": form})
